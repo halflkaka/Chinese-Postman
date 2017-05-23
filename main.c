@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include "postier.h"
 #include "mystack.h"
-//#define N 6
 
-// Definie une pile pour enregistrer le couplage
+//Definie une pile pour enregistrer le couplage
 
 //Definie des etiquettes pour tous les sommets
 typedef struct etiquette
@@ -14,17 +13,12 @@ typedef struct etiquette
     int paire;
     int pre;
 }etiquette;
-/*int Adjacence[N][N] = {
-    {0,1,1,0,0,1},
-    {1,0,0,1,1,1},
-    {1,0,0,1,0,0},
-    {0,1,1,0,1,0},
-    {0,1,0,1,0,0},
-    {1,1,0,0,0,0}};*/
+
 pile Couplage;//couplage
 int couplage[N][1] = {0};//marque de couplage
 int marque_arret[N][N];
 etiquette etique[N];//etiquette des sommets
+
 void init_etique()
 {
     int i;
@@ -35,6 +29,7 @@ void init_etique()
     }
     return;
 };
+
 void init_marque()
 {
     int i,j;
@@ -45,6 +40,7 @@ void init_marque()
     }
     return;
 };
+
 int dans_Couplage(int point)
 {
     int i;
@@ -56,6 +52,7 @@ int dans_Couplage(int point)
     }
     return 0;
 }
+
 void renouveler_Couplage(int s)
 {
     while(Couplage.length != 0){
@@ -65,7 +62,6 @@ void renouveler_Couplage(int s)
         couplage[y][0] = 0;
         pop(&Couplage);
     }
-    //push(x,y,&Couplage);
     int n = N;
     int i;
     while(n-- > 0){
@@ -86,6 +82,7 @@ void renouveler_Couplage(int s)
     }
 
 }
+
 void etape2(int x,int s)
 {
     int y;
@@ -93,9 +90,6 @@ void etape2(int x,int s)
         if(Adjacence[x][y] == 1 && marque_arret[x][y] == 0 && etique[x].origine == s + 1 && etique[x].paire == 0){
             if(etique[y].origine == 0 && !dans_Couplage(y)){
                 couplage[x][0] = y + 1;//{x,y} x+1=x, y+1=y
-                //push(x+1,y+1,&Couplage);
-                //couplage[y][0] = x + 1;
-                //printf("couplage{%d,%d}\n",x+1,y+1);
                 etique[y].origine = s + 1;
                 etique[y].paire = 1;
                 etique[y].pre = x + 1;
@@ -145,35 +139,12 @@ int main()
             etique[s].pre = 0;
             etape2(s,s);
             renouveler_Couplage(s);
-            /*for(i=0;i<N;i++){
-                if(couplage[i][0]!=0){printf("couplage{%d,%d}\n",i+1,couplage[i][0]);}
-            }*/
             for(i=0;i<N;i++){
                 printf("etique[%d]:[%d,%d,%d]\n",i+1,etique[i].origine,etique[i].paire,etique[i].pre);
             }
             s++;
         }
         else{s++;}
-        //printf("s = %d\n",s);
     }
 	return 0;
 }
-/* int Poid[5][5]
- * int parcouru[5][5]
- * int pi = 0
- * while(existe chemin augmentant){
- * 		trouver tous les chemins possibles
- * 		while(existe chemin pas regarder encore){
- * 			if(chemin pas parcouru){
- * 				newpi = pi + Poid
- * 			}
- * 			else{
- * 				newpi = pi - Poid
- * 			}
- * 			if(newpi < pi){
- * 				pi = newpi
- * 				update K
- * 			}
- * 		}
- *
-*/
