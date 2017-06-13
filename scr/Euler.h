@@ -1,9 +1,11 @@
-
 struct stack
 {
     int top;
     int sommet[N];
 }s;
+
+extern int Chemin[N*N];
+extern int longueur;
 
 void dfs(int depart)//DFS pour parcourir tous les arrets possibles
 {
@@ -44,6 +46,7 @@ void Euler(int depart)
         }
         if(!flag){//Si tous les arrets sont parcourus
             printf("%d ",s.sommet[s.top]);
+            Chemin[longueur++] = s.sommet[s.top];
             s.top --;//pop
         }
         else{
